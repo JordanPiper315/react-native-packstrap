@@ -1,23 +1,27 @@
 import { useState } from "react";
 import { HOMEPAGECARDS } from "../shared/homepagecards";
-import { FlatList } from "react-native";
-import { Avatar, ListItem, Image } from "react-native-elements";
+import { FlatList, StyleSheet } from "react-native";
+import { Avatar, ListItem, Image, Text } from "react-native-elements";
 import DirectoryScreen from "./DirectoryScreen";
 import LoginScreen from "./LoginScreen";
 import { View } from "react-native-animatable";
+import WelcomeScreen from "./WelcomeScreen";
 
 const Main = () => {
   const [cards, setCards] = useState(HOMEPAGECARDS);
 
   return (
-    <View>
-      <Image source={require("../assets/images/hiking.jpg")} />
+    <View style={styles.container}>
+      <WelcomeScreen />
+      {/* <DirectoryScreen cards={cards} /> */}
     </View>
   );
-
-  {
-    /* <DirectoryScreen cards={cards} /> */
-  }
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 export default Main;
