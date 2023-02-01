@@ -7,7 +7,7 @@ import LoginScreen from "./LoginScreen";
 
 const backgroundImage = require("../assets/images/welcomeImage.jpg");
 
-const WelcomeScreen = () => {
+const WelcomeScreen = ({ navigation }) => {
   const [showButton, setShowButton] = useState(true);
   const [backgroundImageOpacity, setBackgroundImageOpacity] = useState(1);
   const backgroundOpacity = useRef(new Animated.Value(1)).current;
@@ -75,6 +75,7 @@ const WelcomeScreen = () => {
                 setShowButton(!showButton);
                 handleWelcome();
                 opacityTiming.start();
+                navigation.navigate("Login");
               }}
             >
               <Text style={{ alignSelf: "center" }}>Welcome</Text>
