@@ -13,6 +13,8 @@ const Main = () => {
   return (
     <View style={styles.container}>
       <WelcomeScreen />
+      {console.log(<WelcomeScreen />)}
+      {/*<LoginScreen />*/}
       {/* <DirectoryScreen cards={cards} /> */}
     </View>
   );

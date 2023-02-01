@@ -1,26 +1,46 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
-import {
-  ImageBackground,
-  StyleSheet,
-  View,
-  Image,
-  TouchableOpacity,
-} from "react-native";
+import React, { useRef } from "react";
+import { ImageBackground, StyleSheet, View, Animated } from "react-native";
 import { Button, Text } from "react-native-elements";
 import { useState } from "react";
+import LoginScreen from "./LoginScreen";
 
 const backgroundImage = require("../assets/images/welcomeImage.jpg");
 
 const WelcomeScreen = () => {
   const [showButton, setShowButton] = useState(true);
-  const [backgroundImageChange, setBackgroundImageChange] = useState(false);
+  const [backgroundImageOpacity, setBackgroundImageOpacity] = useState(1);
+  const backgroundOpacity = useRef(new Animated.Value(1)).current;
+
+  const opacityTiming = Animated.timing(backgroundOpacity, {
+    toValue: 0,
+    duration: 2000,
+    useNativeDriver: true,
+  });
+
+  const opacity = backgroundOpacity.interpolate({
+    inputRange: [0, 0.5, 1],
+    outputRange: [0, 0.5, 1],
+  });
 
   const handleWelcome = () => {
-    showButton(!setShowButton);
+    return (
+      <View>
+        <Button
+          title={"React Native Elements"}
+          containerStyle={{
+            width: 200,
+            marginHorizontal: 50,
+            marginVertical: 10,
+          }}
+        />
+        <LoginScreen style={{ zIndex: 3 }} />
+        {console.log("blue")}
+      </View>
+    );
     {
       /* when clicked steps:
-      animate backgrond image to bounce up or fade
+      animate backgrond image fade
       reveals 2 new buttons - login sign up
       with 2 fields username and password
   */
@@ -28,25 +48,41 @@ const WelcomeScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <Animated.View
+      style={
+        { opacity: opacity, flex: 1, flexDirection: "row" } /*styles.container*/
+      }
+    >
       <ImageBackground
         source={backgroundImage}
         style={styles.backgroundImageStyle}
       >
         <StatusBar style="auto" />
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            title="Welcome"
-            style={styles.button}
-            onPress={() => {
-              console.log("Button Pressed");
-            }}
-          >
-            <Text style={{ alignSelf: "center" }}>Welcome</Text>
-          </TouchableOpacity>
+          {showButton ? (
+            <Button
+              title="Welcome"
+              buttonStyle={{
+                backgroundColor: "rgba(111, 202, 186, 1)",
+                borderRadius: 3,
+              }}
+              containerStyle={{
+                width: 200,
+                marginHorizontal: 50,
+                marginVertical: 10,
+              }}
+              onPress={() => {
+                setShowButton(!showButton);
+                handleWelcome();
+                opacityTiming.start();
+              }}
+            >
+              <Text style={{ alignSelf: "center" }}>Welcome</Text>
+            </Button>
+          ) : null}
         </View>
       </ImageBackground>
-    </View>
+    </Animated.View>
   );
 };
 
@@ -58,18 +94,10 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     height: "100%",
-    zIndex: 2,
-  },
-  button: {
-    backgroundColor: "rgba(111, 202, 186, 1)",
-    borderRadius: 5,
-    width: 200,
-    height: 50,
   },
   buttonContainer: {
     position: "absolute",
     bottom: 100,
-    zIndex: 3,
   },
   container: {
     flex: 1,
