@@ -6,6 +6,7 @@ import DirectoryScreen from "./DirectoryScreen";
 import LoginScreen from "./LoginScreen";
 import { View } from "react-native-animatable";
 import WelcomeScreen from "./WelcomeScreen";
+import { createStackNavigator } from "@react-navigation/stack";
 
 const Main = () => {
   const [cards, setCards] = useState(HOMEPAGECARDS);
