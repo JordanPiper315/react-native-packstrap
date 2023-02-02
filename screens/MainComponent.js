@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { HOMEPAGECARDS } from "../shared/homepagecards";
 import { FlatList, StyleSheet, Platform, View } from "react-native";
-import { Avatar, ListItem, Image, Text } from "react-native-elements";
-import DirectoryScreen from "./DirectoryScreen";
-import LoginScreen from "./LoginScreen";
-import WelcomeScreen from "./WelcomeScreen";
+import { Avatar, ListItem, Image, Text, Icon } from "react-native-elements";
 import { createStackNavigator } from "@react-navigation/stack";
 import Constants from "expo-constants";
 import TripsInfoScreen from "./TripsInfoScreen";
