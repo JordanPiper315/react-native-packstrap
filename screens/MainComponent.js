@@ -6,25 +6,74 @@ import DirectoryScreen from "./DirectoryScreen";
 import LoginScreen from "./LoginScreen";
 import WelcomeScreen from "./WelcomeScreen";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Constants } from "expo-constants";
+import Constants from "expo-constants";
 import TripsInfoScreen from "./TripsInfoScreen";
 import TripsScreen from "./TripsScreen";
 import { TRIPS } from "../shared/trips";
+import HomeScreen from "./HomeScreen";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+
+const Drawer = createDrawerNavigator();
+
+const screenOptions = {
+  headerTintColor: "#fff",
+  headerStyle: { backgroundColor: "#6fcaba" },
+};
+
+const HomeNavigator = () => {
+  const Stack = createStackNavigator();
+  return (
+    <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ title: "Home" }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const TripsNavigator = () => {
+  const Stack = createStackNavigator();
+  return (
+    <Stack.Navigator initialRouteName="Trips" screenOptions={screenOptions}>
+      <Stack.Screen
+        name="Trips"
+        component={TripsScreen}
+        options={{ title: "Trips Directory" }}
+      />
+      <Stack.Screen
+        name="TripInfo"
+        component={TripsInfoScreen}
+        options={({ route }) => ({ title: route.params.trip.id })}
+      />
+    </Stack.Navigator>
+  );
+};
 
 const Main = () => {
-  const [cards, setCards] = useState(HOMEPAGECARDS);
-  const [trips, setTrips] = useState(TRIPS);
-  const [selectedTripId, setSelectedTripId] = useState();
-
   return (
-    <View style={{ flex: 1 }}>
-      <TripsScreen
-        trips={trips}
-        onPress={(tripsId) => setSelectedTripId(tripsId)}
-      />
-      <TripsInfoScreen
-        trip={trips.filter((trip) => trip.id === selectedTripId)[0]}
-      />
+    <View
+      style={{
+        flex: 1,
+        paddingTop: Platform.OS === "ios" ? 0 : Constants.statusBarHeight,
+      }}
+    >
+      <Drawer.Navigator
+        initialRouteName="Home"
+        drawerStyle={{ backgroundColor: "#00AEAE" }}
+      >
+        <Drawer.Screen
+          name="Home"
+          component={HomeNavigator}
+          options={{ title: "Home" }}
+        />
+        <Drawer.Screen
+          name="Trips"
+          component={TripsNavigator}
+          options={{ title: "Trips" }}
+        />
+      </Drawer.Navigator>
     </View>
   );
 };
