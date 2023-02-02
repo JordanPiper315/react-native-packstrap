@@ -7,37 +7,24 @@ import LoginScreen from "./LoginScreen";
 import WelcomeScreen from "./WelcomeScreen";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Constants } from "expo-constants";
-
-const WelcomeNavigator = () => {
-  const Stack = createStackNavigator();
-  return (
-    <Stack.Navigator
-      initialRouteName="Welcome"
-      screenOptions={{
-        headerStyle: { backgroundColor: "#5637DD" },
-        headerTintColor: "#fff",
-      }}
-    >
-      <Stack.Screen
-        name="Welcome"
-        component={WelcomeScreen}
-        options={{ title: "Welcome Screen" }}
-      />
-      <Stack.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{ title: "Login Screen" }}
-      />
-    </Stack.Navigator>
-  );
-};
+import TripsInfoScreen from "./TripsInfoScreen";
+import TripsScreen from "./TripsScreen";
+import { TRIPS } from "../shared/trips";
 
 const Main = () => {
   const [cards, setCards] = useState(HOMEPAGECARDS);
+  const [trips, setTrips] = useState(TRIPS);
+  const [selectedTripId, setSelectedTripId] = useState();
 
   return (
-    <View style={styles.container}>
-      <DirectoryScreen cards={cards} />
+    <View style={{ flex: 1 }}>
+      <TripsScreen
+        trips={trips}
+        onPress={(tripsId) => setSelectedTripId(tripsId)}
+      />
+      <TripsInfoScreen
+        trip={trips.filter((trip) => trip.id === selectedTripId)[0]}
+      />
     </View>
   );
 };
