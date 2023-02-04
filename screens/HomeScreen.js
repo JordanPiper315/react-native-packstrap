@@ -12,24 +12,26 @@ import { HOMEPAGECARDS } from "../shared/homepagecards";
 import { baseUrl } from "../shared/baseUrl";
 import TripsScreen from "./TripsScreen";
 import { createStackNavigator } from "@react-navigation/stack";
+import GearScreen from "./GearScreen";
+import FriendsScreen from "./FriendsScreen";
+import CalendarScreen from "./CalendarScreen";
+import TrainingScreen from "./TrainingScreen";
 
 // const Item = ({ title }) => (
 //   <View style={styles.item}>
 //     <Text style={styles.title}>{title}</Text>
 //   </View>
 // );
+const Stack = createStackNavigator();
 
-const TripsNavigator = () => {
-  const Stack = createStackNavigator();
+const myStack = () => {
   return (
-    <Stack.Navigator screenOptions={screenOptions}>
-      <Stack.Screen
-        name="Trips"
-        component={TripsScreen}
-        options={({ navigation }) => ({
-          title: "Trips",
-        })}
-      />
+    <Stack.Navigator>
+      <Stack.Screen name="Trips" component={TripsScreen} />
+      <Stack.Screen name="Gear" component={GearScreen} />
+      <Stack.Screen name="Friends" component={FriendsScreen} />
+      <Stack.Screen name="Calendar" component={CalendarScreen} />
+      <Stack.Screen name="Training" component={TrainingScreen} />
     </Stack.Navigator>
   );
 };
@@ -51,7 +53,7 @@ const HomeScreen = ({ navigation }) => {
             marginBottom: 0,
           }}
           title="Trips"
-          onPress={() => TripsNavigator()}
+          onPress={() => navigation.navigate("Trips")}
         />
       </Card>
       <Card>
@@ -66,6 +68,7 @@ const HomeScreen = ({ navigation }) => {
             marginBottom: 0,
           }}
           title="Gear"
+          onPress={() => navigation.navigate("Gear")}
         />
       </Card>
       <Card>
@@ -80,6 +83,7 @@ const HomeScreen = ({ navigation }) => {
             marginBottom: 0,
           }}
           title="Friends"
+          onPress={() => navigation.navigate("Friends")}
         />
       </Card>
       <Card>
@@ -94,6 +98,7 @@ const HomeScreen = ({ navigation }) => {
             marginBottom: 0,
           }}
           title="Calendar"
+          onPress={() => navigation.navigate("Calendar")}
         />
       </Card>
       <Card>
@@ -108,31 +113,9 @@ const HomeScreen = ({ navigation }) => {
             marginBottom: 0,
           }}
           title="Training"
+          onPress={() => navigation.navigate("Training")}
         />
       </Card>
-
-      {/*<FlatList
-        style={styles.cards}
-        data={cards}
-        renderItem={({ item }) => (
-          <View>
-            <Image
-              source={item.image}
-              style={{
-                width: 100,
-                height: 100,
-                borderWidth: 2,
-                borderColor: "#d34567",
-                margin: 8,
-              }}
-            />
-            <Item title={item.name} />
-          </View>
-        )}
-        keyExtractor={(item) => item.id}
-        numColumns={2}
-        horizontal={false}
-            /> */}
     </ScrollView>
   );
 };
